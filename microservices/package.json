@@ -1,0 +1,37 @@
+{
+  "name": "crmkin-microservices",
+  "version": "1.0.0",
+  "description": "Auxiliary utilities for the Crmkin business management system ",
+  "main": "observer.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zeusfly-spb/playground.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zeusfly-spb/playground/issues"
+  },
+  "homepage": "https://github.com/zeusfly-spb/playground#readme",
+  "dependencies": {
+    "@rodrigogs/mysql-events": "^0.6.0",
+    "axios": "^0.19.2",
+    "chalk": "^4.1.0",
+    "dotenv": "^8.2.0",
+    "form-data": "^3.0.0",
+    "moment": "^2.27.0",
+    "mysql": "^2.18.1",
+    "mysql2": "^2.1.0",
+    "redis": "^3.0.2",
+    "sequelize": "^6.3.4",
+    "sequelize-pagination": "^1.1.0",
+    "sha256": "^0.2.0",
+    "uuid": "^8.3.1",
+    "ws": "^7.3.0",
+    "wss": "^3.3.4"
+  }
+}
