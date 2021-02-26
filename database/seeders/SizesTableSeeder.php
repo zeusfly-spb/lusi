@@ -1,12 +1,15 @@
 <?php
 
+namespace Database\Seeders;
+
+
 use Illuminate\Database\Seeder;
 use App\Stock\Size;
 
 class SizesTableSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
+     * Run the database seeders.
      *
      * @return void
      */
