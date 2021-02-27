@@ -26,13 +26,6 @@ class UserController extends Controller
      */
     public function login(){
         $testUser = User::getUserByNameAndPassword(request('name'), request('password'));
-        /**
-        if(Auth::attempt(['name' => request('name'), 'password' => request('password')])){
-            $user = Auth::user();
-            $success['token'] =  $user->createToken('MyApp')-> accessToken;
-            return response()->json(['success' => $success], $this-> successStatus);
-        }
-        **/
         if ($testUser) {
             $user = $testUser;
             $success['token'] =  $user->createToken('MyApp')-> accessToken;
