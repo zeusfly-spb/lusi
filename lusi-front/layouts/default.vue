@@ -1,0 +1,90 @@
+<template>
+  <v-app>
+    <v-app-bar
+      :clipped-left="clipped"
+      fixed
+      app
+    >
+      <v-layout
+          align-center
+          class="p-0 m-0"
+          style="padding-left: 0!important; padding-right: 0!important; margin-left: 0!important; margin-right: 0!important;"
+      >
+        <v-flex
+            text-xs-left
+        >
+        </v-flex>
+
+        <v-flex
+            text-xs-center
+        >
+        </v-flex>
+
+        <v-icon
+            class="clickable"
+            v-if="isAuth"
+            title="Выход"
+            color="orange darken-2"
+            @click="logOut"
+            :small="isMobile"
+            :large="!isMobile"
+        >
+          mdi-exit-to-app
+        </v-icon>
+      </v-layout>
+
+
+    </v-app-bar>
+    <v-main>
+      <v-container>
+        <nuxt />
+      </v-container>
+    </v-main>
+    <v-footer
+      :absolute="false"
+      app
+    >
+      <span>&copy; {{ new Date().getFullYear() }}</span>
+    </v-footer>
+  </v-app>
+</template>
+
+<script>
+export default {
+  middleware: 'auth',
+  data: () => ({
+    isMobile: false,
+    clipped: false,
+    drawer: false,
+    fixed: false,
+    title: 'lusi'
+  }),
+  computed: {
+    isAuth () {
+      return this.$auth.loggedIn
+    },
+    authUser () {
+      return this.$auth.user
+    }
+  },
+  methods: {
+    logOut () {
+      this.$auth.logout()
+        .then(() => this.$router.push('/login'))
+    }
+  }
+}
+</script>
+<style>
+.clickable {
+  cursor: pointer;
+  opacity: .7;
+}
+.clickable:HOVER {
+  opacity: 1;
+}
+.exit {
+  display: flex;
+  flex-direction: column-reverse;
+}
+</style>
