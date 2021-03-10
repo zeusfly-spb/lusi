@@ -10,10 +10,6 @@
           class="p-0 m-0"
           style="padding-left: 0!important; padding-right: 0!important; margin-left: 0!important; margin-right: 0!important;"
       >
-        <v-flex
-            text-xs-left
-        >
-        </v-flex>
 
         <v-flex
             text-xs-center

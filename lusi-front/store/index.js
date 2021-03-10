@@ -6,6 +6,9 @@ export const actions = {
   setAccountingDate ({commit}) {
     this.$axios.post('/api/get_accounting_date')
       .then(res => commit('SET_ACCOUNTING_DATE', res.data.date))
+  },
+  changeAccountingDate ({commit}, date) {
+    commit('SET_ACCOUNTING_DATE', date)
   }
 }
 

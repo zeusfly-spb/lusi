@@ -1,6 +1,6 @@
 <template>
   <v-layout
-    align-center
+    align-baseline
     justify-center
     row
     fill-height
@@ -32,7 +32,7 @@
       >
         <template v-slot:activator="{ on }">
           <div
-            class="date-input"
+            :style="{width: `${labelLength * .6}em`}"
           >
             <v-text-field
               :class="{'today': isToday}"
@@ -43,7 +43,7 @@
               <template
                 slot="label"
               >
-                <span
+                <div
                   :class="{
                         'today': isToday,
                         'future': isFuture,
@@ -51,7 +51,7 @@
                     }"
                 >
                     {{ accountingDate | moment('D MMMM YYYY г.') }}
-                </span>
+                </div>
               </template>
             </v-text-field>
           </div>
@@ -80,6 +80,7 @@
 </template>
 
 <script>
+import {mapActions, mapState} from "vuex"
 export default {
   name: 'DateSelector',
   data: () => ({
@@ -87,27 +88,60 @@ export default {
     menu: false
   }),
   computed: {
+    ...mapState({
+      accountingDate: "accountingDate"
+    }),
     isMobile () {
       return ['xs', 'sm'].includes(this.$vuetify.breakpoint.name)
     },
-    accountingDate () {
-      return this.$store.state.accountingDate
+    isToday () {
+      return true
     },
+    isFuture () {
+      return false
+    },
+    isPast () {
+      return false
+    },
+    labelText () {
+      return this.$moment(this.accountingDate).format('D MMMM YYYY г.') || ''
+    },
+    labelLength () {
+      return this.labelText.length || 0
+    }
   },
   methods: {
+    ...mapActions({
+      changeAccountingDate: 'changeAccountingDate'
+    }),
     toPrev () {
 
     },
     toNext () {
 
     },
-    datePicked (date) {
-
+    async datePicked (date) {
+      await this.changeAccountingDate(date)
+      this.menu = false
     }
   }
 }
 </script>
 
 <style scoped>
+.date-input {
+  width: 14em!important;
+
+}
+.today {
+  color: green;
+  font-weight: bold;
+}
+.future {
+  color: #00B8D4;
+}
+.past {
+  color: lightslategrey;
+}
 
 </style>
