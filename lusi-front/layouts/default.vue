@@ -18,6 +18,7 @@
         <v-flex
             text-xs-center
         >
+          <DateSelector/>
         </v-flex>
 
         <v-icon
@@ -50,7 +51,11 @@
 </template>
 
 <script>
+import {mapActions, mapState} from "vuex"
+import DateSelector from "@/components/DateSelector"
+
 export default {
+  name: 'defaultLayout',
   middleware: 'auth',
   data: () => ({
     isMobile: false,
@@ -60,6 +65,9 @@ export default {
     title: 'lusi'
   }),
   computed: {
+    ...mapState({
+      accountingDate: "accountingDate"
+    }),
     isAuth () {
       return this.$auth.loggedIn
     },
@@ -68,10 +76,19 @@ export default {
     }
   },
   methods: {
+    ...mapActions({
+      setAccountingDate: "setAccountingDate"
+    }),
     logOut () {
       this.$auth.logout()
         .then(() => this.$router.push('/login'))
     }
+  },
+  mounted() {
+    this.setAccountingDate()
+  },
+  components: {
+    DateSelector
   }
 }
 </script>
