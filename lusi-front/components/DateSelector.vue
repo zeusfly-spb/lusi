@@ -1,5 +1,6 @@
 <template>
   <v-layout
+    v-if="accountingDate"
     align-baseline
     justify-center
     row
@@ -23,20 +24,18 @@
       <v-menu
         :close-on-content-click="false"
         :nudge-right="40"
-        lazy
         transition="scale-transition"
         offset-y
-        full-width
         min-width="290px"
         v-model="menu"
       >
         <template v-slot:activator="{ on }">
           <div
-            :style="{width: `${labelLength * .6}em`}"
+            :style="{width: `${labelLength * .55}em`}"
           >
             <v-text-field
               :class="{'today': isToday}"
-              :label="accountingDate | moment('D MMMM YYYY г.')"
+              :label="labelText"
               readonly
               v-on="on"
             >
@@ -50,7 +49,7 @@
                         'past': isPast
                     }"
                 >
-                    {{ accountingDate | moment('D MMMM YYYY г.') }}
+                    {{ labelText }}
                 </div>
               </template>
             </v-text-field>
@@ -80,31 +79,29 @@
 </template>
 
 <script>
-import {mapActions, mapState} from "vuex"
+import {mapActions, mapState, mapGetters} from "vuex"
 export default {
   name: 'DateSelector',
   data: () => ({
     date: '',
-    menu: false
+    menu: false,
+    mask: 'D MMMM YYYY г.'
   }),
   computed: {
     ...mapState({
       accountingDate: "accountingDate"
     }),
+    ...mapGetters({
+      isToday: "isToday",
+      isFuture: "isFuture",
+      isPast: "isPast",
+      validDate: "validDate"
+    }),
     isMobile () {
       return ['xs', 'sm'].includes(this.$vuetify.breakpoint.name)
     },
-    isToday () {
-      return true
-    },
-    isFuture () {
-      return false
-    },
-    isPast () {
-      return false
-    },
     labelText () {
-      return this.$moment(this.accountingDate).format('D MMMM YYYY г.') || ''
+      return this.$moment(this.accountingDate).format(this.mask) || ''
     },
     labelLength () {
       return this.labelText.length || 0
@@ -115,14 +112,28 @@ export default {
       changeAccountingDate: 'changeAccountingDate'
     }),
     toPrev () {
+      let current = new Date(this.accountingDate + 'T12:00:00')
+      let prev = new Date(this.accountingDate + 'T12:00:00')
+      prev.setDate(current.getDate() - 1)
+      this.datePicked(prev.toISOString().split('T')[0])
 
     },
     toNext () {
-
+      let current = new Date(this.accountingDate + 'T12:00:00')
+      let next = new Date(this.accountingDate + 'T12:00:00')
+      next.setDate(current.getDate() + 1)
+      this.datePicked(next.toISOString().split('T')[0])
     },
     async datePicked (date) {
-      await this.changeAccountingDate(date)
-      this.menu = false
+      this.$router.replace({path: this.$route.path, query: {date: date}})
+      this.menu ? this.menu = false : null
+    }
+  },
+  watch: {
+    '$route.query': async function (val) {
+      if (val.date && this.validDate(val.date)) {
+        await this.changeAccountingDate(val.date)
+      }
     }
   }
 }

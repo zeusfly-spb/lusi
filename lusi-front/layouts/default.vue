@@ -1,6 +1,7 @@
 <template>
   <v-app>
     <v-app-bar
+      v-if="authUser"
       :clipped-left="clipped"
       fixed
       app
@@ -53,6 +54,7 @@ import DateSelector from "@/components/DateSelector"
 export default {
   name: 'defaultLayout',
   middleware: 'auth',
+  watchQuery: true,
   data: () => ({
     isMobile: false,
     clipped: false,
@@ -71,17 +73,20 @@ export default {
       return this.$auth.user
     }
   },
+  async fetch() {
+    await this.setAccountingDate()
+    await this.setRealDate()
+    this.$router.push({path: this.$route.path, query: {date: this.accountingDate}})
+  },
   methods: {
     ...mapActions({
-      setAccountingDate: "setAccountingDate"
+      setAccountingDate: "setAccountingDate",
+      setRealDate: "setRealDate"
     }),
     logOut () {
       this.$auth.logout()
         .then(() => this.$router.push('/login'))
     }
-  },
-  mounted() {
-    this.setAccountingDate()
   },
   components: {
     DateSelector
