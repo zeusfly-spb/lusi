@@ -36,9 +36,6 @@ class Kernel extends ConsoleKernel
                 $island->sendReminders();
             }
         })->everyMinute();
-
-        $schedule->command('calculate:balances')->->dailyAt('00:03');
-
     }
 
     /**
