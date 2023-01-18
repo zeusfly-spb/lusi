@@ -28,8 +28,6 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-
-//        $schedule->job(new MakeNotifyList)->everyMinute();
         $schedule->call(function () {
             $islands = Island::all();
             foreach ($islands as $island) {
