@@ -36,6 +36,8 @@ class Kernel extends ConsoleKernel
             }
         })->everyMinute();
 
+        $schedule->command('calculate:balances')->->dailyAt('00:03');
+
     }
 
     /**
