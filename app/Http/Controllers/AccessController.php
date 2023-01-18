@@ -5,13 +5,14 @@ namespace App\Http\Controllers;
 use App\Access;
 use App\Setting;
 use Illuminate\Http\Request;
-use Webpatser\Uuid\Uuid;
+use Illuminate\Support\Str;
+
 
 class AccessController extends Controller
 {
     public function create(Request $request)
     {
-        $device_id = (string) Uuid::generate(4);
+        $device_id = (string) Str::uuid();
         $access = Access::create([
             'user_id' => $request->user_id,
             'device_id' => $device_id,
