@@ -46,7 +46,7 @@
                               <span
                                   :class="{'headline': !isMobile, 'caption': isMobile}"
                               >
-                                  Crmkin
+                                  LusiCrm
                               </span>
                                 <div
                                     class="font-weight-bold"

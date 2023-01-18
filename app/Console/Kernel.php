@@ -7,6 +7,7 @@ use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use App\Jobs\MakeNotifyList;
 use Illuminate\Support\Facades\Log;
+use App\Console\Commands\CalculateBalances;
 
 class Kernel extends ConsoleKernel
 {
