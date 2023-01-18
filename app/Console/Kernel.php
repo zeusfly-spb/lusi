@@ -28,17 +28,12 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-
-//        $schedule->job(new MakeNotifyList)->everyMinute();
         $schedule->call(function () {
             $islands = Island::all();
             foreach ($islands as $island) {
                 $island->sendReminders();
             }
         })->everyMinute();
-
-        $schedule->command('calculate:balances')->->dailyAt('00:03');
-
     }
 
     /**
