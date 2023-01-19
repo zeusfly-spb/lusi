@@ -5,7 +5,8 @@ Sequelize.DATE.prototype._stringify = function _stringify(date, options) {
 };
 const sequelize = new Sequelize(CONFIG.db_name, CONFIG.db_user, CONFIG.db_password, {
     host: 'localhost',
-    dialect: 'mysql'
+    dialect: 'mysql',
+    timezone: '+05:00'
 })
 
 module.exports = {

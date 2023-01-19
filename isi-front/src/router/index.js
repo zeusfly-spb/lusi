@@ -88,7 +88,7 @@ export function createRouter() {
             leads: true
         })
         let currentIslandName = store.getters.workingIsland && store.getters.workingIsland.name || null
-        document.title =  `${currentIslandName || 'Crmkin'} - ${to.meta.title}`
+        document.title =  `${currentIslandName || 'MyCRM'} - ${to.meta.title}`
         let targetPage = to.path.substring(1)
         store.dispatch('setCurrentPage', targetPage)
         if (targetPage === 'daily') {

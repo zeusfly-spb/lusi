@@ -43,11 +43,11 @@
                         &nbsp;
                         <div>
                             <div v-if="isAuth">
-                              <span
+                              <!-- <span
                                   :class="{'headline': !isMobile, 'caption': isMobile}"
                               >
-                                  LusiCrm
-                              </span>
+                                  MyCRM
+                              </span> -->
                                 <div
                                     class="font-weight-bold"
                                     :class="{'caption': isMobile, 'headline': !isMobile}"
